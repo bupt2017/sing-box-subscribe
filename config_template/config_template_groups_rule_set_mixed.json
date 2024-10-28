@@ -38,11 +38,9 @@
 		],
 		"rules": [
 			{
-				"rule_set": "geosite-cn",
-				"server": "localDns"
-			},
-			{
-				"outbound": "any",
+				"outbound": [
+					"any"
+				],
 				"server": "localDns",
 				"disable_cache": true
 			},
@@ -53,6 +51,13 @@
 			{
 				"clash_mode": "global",
 				"server": "proxyDns"
+			},
+			{
+				"rule_set": [
+					"geosite-cn",
+					"geosite-private"
+				],
+				"server": "localDns"
 			}
 		],
 		"final": "proxyDns",
@@ -61,22 +66,21 @@
 	"inbounds": [
 		{
 			"type": "mixed",
-			"listen": "0.0.0.0",
+			"listen": "::",
 			"listen_port": 33510,
 			"sniff": true,
-			"domain_strategy": "prefer_ipv4",
-			"users": []
+			"domain_strategy": "prefer_ipv4"
 		}
 	],
 	"outbounds": [
 		{
 			"type": "urltest",
-			"tag": "autoSelet",
+			"tag": "autoSelect",
 			"outbounds": [
 				"{all}"
 			],
 			"url": "https://www.gstatic.com/generate_204",
-			"interval": "5m",
+			"interval": "3m",
 			"tolerance": 50
 		},
 		{
@@ -85,10 +89,10 @@
 			"outbounds": [
 				"direct",
 				"block",
-				"autoSelet",
+				"autoSelect",
 				"{all}"
 			],
-			"default": "autoSelet"
+			"default": "autoSelect"
 		},
 		{
 			"type": "selector",
@@ -117,7 +121,7 @@
 				"proxy",
 				"direct",
 				"block",
-				"autoSelet",
+				"autoSelect",
 				"{all}"
 			],
 			"default": "direct"
